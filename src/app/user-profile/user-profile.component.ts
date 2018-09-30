@@ -16,15 +16,20 @@ export class UserProfileComponent implements OnInit {
     private firstname: string = '';
     private contents: string = '';
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient,private http :Http) {
     }
 
     ngOnInit() {
+        this.createUser().subscribe();
         this.getUser().subscribe(results => this.firstname = results.firstName);
     }
 
+    createUser(): Observable<any> {
+        return this.httpClient.post("http://localhost:8080/create",{name:"s"})
+    }
+
     getUser(): Observable<any> {
-        return this.httpClient.get("http://localhost:8080/authenticate")
+        return this.httpClient.get("http://localhost:8080/find")
     }
 
 }
